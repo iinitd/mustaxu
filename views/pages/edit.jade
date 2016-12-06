@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+	h1= title
+	.container
+		.row
+			form.form-horizontal(method="post",action="/edit/#{article._id}")
+				.form-group
+					input#inputTitle.form-control(type="text", name="article[title]", value="#{article.title}")
+				.form-group
+					textarea#inputTitle.form-control(type="text", name="article[content]") #{article.content}
+				.form-group
+					button.btn.btn-default(type="submit") submit

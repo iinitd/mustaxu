@@ -1,9 +1,0 @@
-extends layout
-
-block content
-	h1= title
-	.container
-		.row
-			h1 #{article.title}
-			a(href="/edit/#{article._id}") edit
-			p: span #{article.content}

@@ -11,12 +11,14 @@
     "debug": "~2.2.0",
     "express": "~4.14.0",
     "express-mongoose": "^0.1.0",
+    "express-session": "^1.14.2",
     "jade": "~1.11.0",
     "mongodb": "^2.2.12",
     "mongoose": "^4.7.1",
     "monk": "*",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
+    "showdown": "^1.5.1",
     "underscore": "^1.8.3"
   }
 }

@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+	h1= title
+	.container
+		.row
+		.col-md-4
+		.col-md-4
+			form.form-horizontal(method="post",action="/login")
+				.form-group
+					input#inputTitle.form-control(type="text", name="username")
+				.form-group
+					input#inputTitle.form-control(type="text", name="password")
+				.form-group
+					button.btn.btn-default(type="submit") submit
+		.col-md-4

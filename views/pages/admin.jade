@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+	h1= title
+	.container
+		.row
+			form.form-horizontal(method="post",action="/admin")
+				.form-group
+					input#inputTitle.form-control(type="text", name="article[title]", value="#{article.name}")
+				.form-group
+					textarea#inputTitle.form-control(type="text", name="article[content]", value="#{article.email}")
+				.form-group
+					button.btn.btn-default(type="submit") submit
+		.row
+			each u in article
+				p: span "#{u}"
