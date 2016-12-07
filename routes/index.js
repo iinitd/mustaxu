@@ -21,15 +21,24 @@ router.use(bodyParser.urlencoded());
 router.use(session({
 	secret: 'recommand 128 bytes random string', // 建议使用 128 个字符的随机字符串
 	cookie: {
-		maxAge: 60 * 1000
+		maxAge: 60 * 1000 * 1000
 	}
 }));
+
+router.use(function(req, res, next) {
+	res.locals.user = req.session.user; // 从session 获取 user对象
+	var err = req.session.error; //获取错误信息
+	delete req.session.error;
+	res.locals.message = ""; // 展示的信息 message
+	if (err) {
+		res.locals.message = '<div class="alert alert-danger" style="margin-bottom:20px;color:red;">' + err + '</div>';
+	}
+	next(); //中间件传递
+});
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
-
 
 	Article.fetch(function(err, article) {
 		if (err) {
@@ -145,8 +154,10 @@ router.get('/p/:id', function(req, res) {
 
 	var id = req.params.id;
 
-	Article.findById(id, function(err, article) {
 
+	Article.findById(id, function(err, article) {
+		var user = article.author
+		console.log(user)
 		var converter = new showdown.Converter(),
 			text = article.content,
 			html = converter.makeHtml(text);
@@ -177,6 +188,7 @@ router.get('/edit/:id', function(req, res) {
 });
 
 router.post('/edit/:id', function(req, res) {
+	var user = req.session.user;
 	var id = req.params.id;
 	var title = req.body['article[title]'];
 	var content = req.body['article[content]']
@@ -189,6 +201,7 @@ router.post('/edit/:id', function(req, res) {
 			_id: id
 		}, {
 			title: title,
+			author: user.username,
 			content: content
 		}, function(err, docs) { //更新
 			console.log(docs);
@@ -214,7 +227,7 @@ router.get('/test', function(req, res) {
 	})
 })
 
-router.get('/admin', function(req, res) {
+router.get('/new', function(req, res) {
 
 
 
@@ -222,18 +235,21 @@ router.get('/admin', function(req, res) {
 		if (err) {
 			console.log(err)
 		}
-		res.render('admin', {
+		res.render('new', {
 			article: article
 		})
 	})
 })
 
-router.post('/admin', function(req, res) {
+router.post('/new', function(req, res) {
+	var user = req.session.user;
 	var article = req.body.article;
 	var articleObj = new Article({
 		title: req.body['article[title]'],
+		author: user.username,
 		content: req.body['article[content]']
 	});
+
 	articleObj.save(function(err, articleObj) {
 		if (err) {
 			console.log(err)

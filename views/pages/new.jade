@@ -4,7 +4,7 @@ block content
 	h1= title
 	.container
 		.row
-			form.form-horizontal(method="post",action="/admin")
+			form.form-horizontal(method="post",action="/new")
 				.form-group
 					input#inputTitle.form-control(type="text", name="article[title]", value="#{article.name}")
 				.form-group

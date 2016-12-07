@@ -3,6 +3,7 @@ var ArticleSchema = mongoose.Schema;
 // Define User schema 
 var _Article = new ArticleSchema({
 	title: String,
+	author: String,
 	content: String
 }, {
 	versionKey: false

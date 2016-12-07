@@ -2,8 +2,16 @@ extends ../layout
 
 block content
 	h1= title
+
 	.container
 		.row
+			- if (user)
+				span hello, #{user.username}
+				a(href="/logout")
+					button.btn.btn-link 退出
+		.row
 			h1 #{article.title}
-			a(href="/edit/#{article._id}") edit
+			h4 #{article.author}
+			- if (user)
+				a(href="/edit/#{article._id}") edit
 			!{html}

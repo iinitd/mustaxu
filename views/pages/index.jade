@@ -4,19 +4,22 @@ block content
 	h1= title
 	.container
 		.row
-			.col-md-1
-				a(href="/admin")
-					buttun.btn.btn-default(type="button") 发布
-			.col-md-1
-				a(href="/reg")
-					buttun.btn.btn-default(type="button") 注册
-			.col-md-1
-				a(href="/login")
-					buttun.btn.btn-default(type="button") 登陆
-			.col-md-2
-				span #{username}
-			- if (login)
-				a(href="/logout") 退出
+			- if(!user)
+				.col-md-1
+					a(href="/reg")
+						buttun.btn.btn-default(type="button") 注册
+				.col-md-1
+					a(href="/login")
+						buttun.btn.btn-default(type="button") 登陆
+
+			- if (user)
+				.col-md-1
+					a(href="/new")
+						buttun.btn.btn-default(type="button") 发布
+				.col-md-1
+					span #{username}
+					a(href="/logout")
+						button.btn.btn-link 退出
 		.row
 			each u in article
 				a(href="/p/#{u.id}")
