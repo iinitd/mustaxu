@@ -5,7 +5,6 @@ block content
 	.container
 		.row
 			.col-md-4
-			.col-md-4
 				form.form-horizontal(method="post",action="/reg")
 					.form-group
 						input#inputTitle.form-control(type="text", name="username")
@@ -13,7 +12,6 @@ block content
 						input#inputTitle.form-control(type="text", name="password")
 					.form-group
 						button.btn.btn-default(type="submit") submit
-			.col-md-4
 		.row
 			each u in user
 				p #{u}

@@ -39,12 +39,13 @@ router.get('/', function(req, res, next) {
 			console.log(req.session.user.username)
 			res.render('index', {
 				username: req.session.user.username,
-				article: article
+				article: article,
+				login: true
 			})
 		} else {
 			console.log('not login')
 			res.render('index', {
-				username: 'anonoymous',
+				username: '游客',
 				article: article
 			})
 		}
@@ -84,7 +85,9 @@ router.post('/reg', function(req, res) {
 		if (err) {
 			console.log(err)
 		}
-		res.redirect('/reg')
+		req.session.user = null;
+		req.session.user = userObj;
+		res.redirect('/')
 	});
 
 })
