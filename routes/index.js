@@ -9,8 +9,7 @@ var session = require('express-session');
 var fs = require("fs");
 var _ = require('underscore');
 
-
-mongoose.connect('mongodb://mcogons:mkd6818615@mongodb.eatj.com/mcogons');
+mongoose.connect('mongodb://m:m@ds127928.mlab.com:27928/mustaxu');
 //mongoose.connect('mongodb://localhost/blog2');
 
 var Article = models.Article;
