@@ -221,27 +221,35 @@ router.post('/edit/:id', function(req, res) {
 	var user = req.session.user;
 	var id = req.params.id;
 	var title = req.body['article[title]'];
-	var content = req.body['article[content]']
-	Article.findById(id, function(err, article2) {
-		if (err) {
-			console.log(err)
-		}
+	var content = req.body['article[content]'];
+	var tags = req.body['article[tags]'].split(/[ |,]/);
+	if (user) {
+		Article.findById(id, function(err, article2) {
+			if (err) {
+				console.log(err)
+			}
 
-		Article.update({
-			_id: id
-		}, {
-			title: title,
-			author: user.username,
-			content: content
-		}, function(err, docs) { //更新
-			console.log(docs);
-			console.log('update success');
+			Article.update({
+				_id: id
+			}, {
+				title: title,
+				author: user.username,
+				tags: tags,
+				content: content
+
+			}, function(err, docs) { //更新
+				console.log(docs);
+				console.log('update success');
+
+			})
+
+			res.redirect('/p/' + id);
 
 		})
+	} else {
+		res.redirect('/login')
+	}
 
-		res.redirect('/p/' + id);
-
-	})
 
 })
 
@@ -294,8 +302,6 @@ router.post('/new', function(req, res) {
 	var user = req.session.user;
 	var article = req.body.article;
 	var tags = req.body['article[tags]'].split(/[ |,]/);
-	console.log(tags);
-
 	var articleObj = new Article({
 		title: req.body['article[title]'],
 		author: user.username,

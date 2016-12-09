@@ -10,4 +10,6 @@ block content
 				.form-group
 					textarea#inputTitle.form-control(type="text", name="article[content]") #{article.content}
 				.form-group
+					input#inputTitle.form-control(type="json", name="article[tags]", value="#{article.tags}")
+				.form-group
 					button.btn.btn-default(type="submit") submit
