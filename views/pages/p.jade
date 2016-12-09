@@ -1,17 +1,16 @@
 extends ../layout
 
 block content
-	h1= title
-
 	.container
-		.row
-			- if (user)
-				span hello, #{user.username}
-				a(href="/logout")
-					button.btn.btn-link 退出
 		.row
 			h1 #{article.title}
 			h4 #{article.author}
+		.row
+			each u in article.tags
+				a(href="/tag/#{u}") #{u} 
 			- if (user)
 				a(href="/edit/#{article._id}") edit
+				a 
+				a(href="/remove/#{article._id}") remove
+		.row
 			!{html}

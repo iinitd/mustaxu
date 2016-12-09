@@ -1,0 +1,11 @@
+.container
+	hr
+	.row
+		span Proudly powered by Mustaxu |  
+
+		- if(!user)
+				a(href="/login") 登陆
+		- if (user)
+			span hello #{user.username}
+			a(href="/logout")
+				button.btn.btn-link 退出

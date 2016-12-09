@@ -4,6 +4,7 @@ var ArticleSchema = mongoose.Schema;
 var _Article = new ArticleSchema({
 	title: String,
 	author: String,
+	tags: [String],
 	content: String
 }, {
 	versionKey: false
@@ -20,7 +21,12 @@ _Article.statics = {
 			_id: id
 
 		}).exec(cb);
+	},
+	findByTag: function(tag, cb) {
+		return this.findOne({
+			_id: tag
 
+		}).exec(cb);
 	}
 };
 

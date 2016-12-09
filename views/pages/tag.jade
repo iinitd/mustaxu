@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+	.container
+		h1 #{tag}
+		- if(hasArticle)
+			.row
+				each u in article
+					a(href="/p/#{u.id}")
+						h4 #{u.title}
+					p: span #{u.content}
+		- else
+			.row
+				p: span none

@@ -1,0 +1,34 @@
+
+Running node-supervisor with
+  program './bin/www'
+  --watch '.'
+  --extensions 'node,js,/bin/www'
+  --exec 'node'
+
+Starting child process with 'node ./bin/www'
+Watching directory '/Users/cogons/Work.localized/FrontEnd/Nodejs/mustaxu' for changes.
+Press rs for restarting the process.
+Thu, 08 Dec 2016 16:23:11 GMT body-parser deprecated undefined extended: provide extended option at routes/index.js:19:23
+Thu, 08 Dec 2016 16:23:11 GMT express-session deprecated undefined resave option; provide resave option at routes/index.js:21:12
+Thu, 08 Dec 2016 16:23:11 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at routes/index.js:21:12
+Thu, 08 Dec 2016 16:23:11 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Thu, 08 Dec 2016 16:23:11 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:30:9
+Received SIGHUP, killing child process...
+Parent process exiting, terminating child...
+
+Running node-supervisor with
+  program './bin/www'
+  --watch '.'
+  --extensions 'node,js,/bin/www'
+  --exec 'node'
+
+Starting child process with 'node ./bin/www'
+Watching directory '/Users/cogons/Work.localized/FrontEnd/Nodejs/mustaxu' for changes.
+Press rs for restarting the process.
+Thu, 08 Dec 2016 16:24:41 GMT body-parser deprecated undefined extended: provide extended option at routes/index.js:19:23
+Thu, 08 Dec 2016 16:24:41 GMT express-session deprecated undefined resave option; provide resave option at routes/index.js:21:12
+Thu, 08 Dec 2016 16:24:41 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at routes/index.js:21:12
+Thu, 08 Dec 2016 16:24:41 GMT express-session deprecated undefined resave option; provide resave option at app.js:30:9
+Thu, 08 Dec 2016 16:24:41 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:30:9
+Received SIGINT, killing child process...
+Parent process exiting, terminating child...

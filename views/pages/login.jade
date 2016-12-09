@@ -7,8 +7,12 @@ block content
 			.col-md-4
 				form.form-horizontal(method="post",action="/login")
 					.form-group
-						input#inputTitle.form-control(type="text", name="username")
+						.input-group
+							.input-group-addon 用户名
+							input#inputTitle.form-control(type="text", name="username")
 					.form-group
-						textarea#inputTitle.form-control(type="text", name="password")
+						.input-group
+							.input-group-addon 密码
+							input#inputTitle.form-control(type="text", name="password")
 					.form-group
-						button.btn.btn-default(type="submit") submit
+						button.btn.btn-default(type="submit") 登陆

@@ -6,6 +6,7 @@ var models = require('../models/models');
 var bodyParser = require('body-parser');
 var showdown = require('showdown');
 var session = require('express-session');
+var fs = require("fs");
 var _ = require('underscore');
 
 
@@ -47,6 +48,7 @@ router.get('/', function(req, res, next) {
 		if (req.session.user) {
 			console.log(req.session.user.username)
 			res.render('index', {
+				title: 'Mustaxu',
 				username: req.session.user.username,
 				article: article,
 				login: true
@@ -54,6 +56,7 @@ router.get('/', function(req, res, next) {
 		} else {
 			console.log('not login')
 			res.render('index', {
+				title: 'Mustaxu',
 				username: '游客',
 				article: article
 			})
@@ -63,6 +66,30 @@ router.get('/', function(req, res, next) {
 
 });
 
+router.get('/tag/:tag', function(req, res) {
+
+	var tag = req.params.tag;
+	Article.find({
+		tags: tag
+	}, function(err, article) {
+		if (article.length > 0) {
+			res.render('tag', {
+				tag: tag,
+				article: article,
+				hasArticle: true
+			})
+		} else {
+			res.render('tag', {
+				tag: tag,
+				hasArticle: false
+			})
+		}
+	})
+
+
+
+})
+
 router.get('/reg', function(req, res, next) {
 
 	User.fetch(function(err, user) {
@@ -70,6 +97,7 @@ router.get('/reg', function(req, res, next) {
 			console.log(err)
 		}
 		res.render('reg', {
+			title: 'Mustaxu',
 			user: user
 		})
 	})
@@ -166,6 +194,8 @@ router.get('/p/:id', function(req, res) {
 		}
 		console.log(html)
 		res.render('p', {
+			user: req.session.user,
+			title: 'Mustaxu',
 			article: article,
 			html: html
 		})
@@ -229,48 +259,62 @@ router.get('/test', function(req, res) {
 
 router.get('/new', function(req, res) {
 
+	var user = req.session.user;
+	if (user) {
 
+		Article.fetch(function(err, article) {
+			if (err) {
+				console.log(err)
+			}
+			res.render('new', {
+				article: article
+			})
+		})
+	} else {
+		res.redirect('/login')
+	}
+})
 
-	Article.fetch(function(err, article) {
+router.get('/remove/:id', function(req, res) {
+
+	var id = req.params.id;
+
+	Article.remove({
+		_id: id
+	}, function(err, article) {
 		if (err) {
 			console.log(err)
 		}
-		res.render('new', {
-			article: article
-		})
+		res.redirect('/')
 	})
+
 })
 
 router.post('/new', function(req, res) {
 	var user = req.session.user;
 	var article = req.body.article;
+	var tags = req.body['article[tags]'].split(/[ |,]/);
+	console.log(tags);
+
 	var articleObj = new Article({
 		title: req.body['article[title]'],
 		author: user.username,
+		tags: tags,
 		content: req.body['article[content]']
+	});
+
+	fs.writeFile("./post/" + req.body['article[title]'] + ".txt", articleObj.content, function(err) {
+		if (err) throw err;
+		console.log("File Saved !"); //文件被保存
 	});
 
 	articleObj.save(function(err, articleObj) {
 		if (err) {
 			console.log(err)
 		}
-		res.redirect('/list')
+		res.redirect('/')
 	});
 
 })
-
-
-router.get('/name', function(req, res) {
-
-	User.findById(function(err, user) {
-		if (err) {
-			console.log(err)
-		}
-		res.send(article)
-	})
-
-})
-
-
 
 module.exports = router;
