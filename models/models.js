@@ -16,6 +16,13 @@ _Article.statics = {
 			.find()
 			.exec(cb)
 	},
+	fetchPage: function(page, cb) {
+		return this
+			.find()
+			.skip((page - 1) * 3)
+			.limit(3)
+			.exec(cb)
+	},
 	findById: function(id, cb) {
 		return this.findOne({
 			_id: id

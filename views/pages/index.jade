@@ -12,3 +12,8 @@ block content
 				a(href="/p/#{u.id}")
 					h4 #{u.title}
 				p: span #{u.content}
+		.row
+			- for (var i = 1; i < pageNum+1; ++i) {
+				a(href="/page/#{i}") #{i} 
+			- }
+			a 

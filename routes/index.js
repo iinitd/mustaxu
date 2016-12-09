@@ -38,30 +38,50 @@ router.use(function(req, res, next) {
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
 
-	Article.fetch(function(err, article) {
-		if (err) {
-			console.log(err)
-		}
-		if (req.session.user) {
-			console.log(req.session.user.username)
-			res.render('index', {
-				title: 'Mustaxu',
-				username: req.session.user.username,
-				article: article,
-				login: true
-			})
-		} else {
-			console.log('not login')
-			res.render('index', {
-				title: 'Mustaxu',
-				username: '游客',
-				article: article
-			})
-		}
+router.get('/', function(req, res) {
+	res.redirect('/page/1');
+});
 
+router.get('/page/:page', function(req, res, next) {
+
+	var page = req.params.page;
+
+	Article.fetch(function(err, docs) {
+		if (!err) {
+
+			var pageNum = Math.ceil(docs.length / 3);
+
+			Article.fetchPage(page, function(err, article) {
+				if (err) {
+					console.log(err)
+				}
+
+				if (req.session.user) {
+					console.log(req.session.user.username)
+					res.render('index', {
+						title: 'Mustaxu',
+						username: req.session.user.username,
+						article: article,
+						login: true,
+						pageNum: pageNum
+
+					})
+				} else {
+					console.log('not login')
+					res.render('index', {
+						title: 'Mustaxu',
+						username: '游客',
+						article: article,
+						pageNum: pageNum
+					})
+				}
+
+			})
+		}
 	})
+
+
 
 });
 
