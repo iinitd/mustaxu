@@ -47,7 +47,7 @@ router.get('/', function(req, res, next) {
 
 			if (req.session.user) {
 				console.log(req.session.user.username)
-				res.render('list', {
+				res.render('index', {
 					title: 'Mustaxu',
 					username: req.session.user.username,
 					article: article,
@@ -73,12 +73,37 @@ router.get('/list', function(req, res) {
 });
 
 router.get('/tag', function(req, res) {
-	Tag.find({}, function(err, tag) {
-		if (!err) {
-			res.render('taglist', {
-				tag: tag
+	Tag.find({}, function(err, taglist) {
+		taglist.forEach(function(tag) {
+			Article.find({
+				tags: tag.name
+			}, function(err, article) {
+				if (article.length == 0) {
+					Tag.remove({
+						name: tag.name
+					}, (err) => {
+						console.log('---clean db ---------------------------------------');
+						if (err) {
+							console.log('Empty tags are wiped', err);
+						}
+					});
+				}
 			})
-		}
+
+			res.render('taglist', {
+				tag: taglist
+			});
+		})
+
+		res.render('taglist', {
+			tag: taglist
+		});
+
+		/*		if (!err) {
+					res.render('taglist', {
+						tag: taglist
+					})
+				}*/
 	})
 })
 
@@ -279,6 +304,23 @@ router.post('/edit/:id', function(req, res) {
 	var title = req.body['article[title]'];
 	var content = req.body['article[content]'];
 	var tags = req.body['article[tags]'].split(/[ |,]/);
+	tags.forEach(function(tag) {
+		var tagObj = new Tag({
+			name: tag
+		})
+		Tag.find({
+			name: tag
+		}, function(req, res) {
+			if (res.length == 0) {
+				tagObj.save(function(err, tagObj) {
+					if (err) {
+						console.log(err)
+					}
+					console.log(tagObj)
+				});
+			}
+		})
+	})
 	if (user) {
 		Article.findById(id, function(err, article2) {
 			if (err) {
@@ -358,19 +400,24 @@ router.post('/new', function(req, res) {
 	var user = req.session.user;
 	var article = req.body.article;
 	var tags = req.body['article[tags]'].split(/[ |,]/);
-	for (i = 0; i < tags.length; i++) {
+
+	tags.forEach(function(tag) {
 		var tagObj = new Tag({
-			name: tags[i]
+			name: tag
 		})
 		Tag.find({
-			name: tags[i]
+			name: tag
 		}, function(req, res) {
 			if (res.length == 0) {
-				tagObj.save();
+				tagObj.save(function(err, tagObj) {
+					if (err) {
+						console.log(err)
+					}
+					console.log(tagObj)
+				});
 			}
 		})
-
-	}
+	})
 	var articleObj = new Article({
 		title: req.body['article[title]'],
 		author: user.username,

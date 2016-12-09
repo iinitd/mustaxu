@@ -3,14 +3,24 @@ extends ../layout
 block content
 	.container
 		.row
-			h1 #{article.title}
-			h4 #{article.author}
-		.row
-			each u in article.tags
-				a(href="/tag/#{u}") #{u} 
-			- if (user)
-				a(href="/edit/#{article._id}") edit
-				a 
-				a(href="/remove/#{article._id}") remove
-		.row
-			!{html}
+			.col-md-8
+				.row
+					.col-md-8
+						h4 #{article.title}
+					.col-md-4.text-right
+						- if (user)
+						a.small(href="/edit/#{article._id}") 编辑
+						a 
+						a.small(href="/remove/#{article._id}") 删除
+					
+						
+				.row
+					.col-md-12
+						span 标签 
+								each u in article.tags
+									a(href="/tag/#{u}") #{u}
+									span 
+						hr
+				.row
+					.col-md-8
+						!{html}

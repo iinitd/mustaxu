@@ -5,17 +5,17 @@ block content
 		.row
 			.col-md-8
 					each u in article
-						.media
-							a.media-left(href="/p/#{u.id}")
-								img(src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjEzLjIyNjU2MjUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==")
-							.media-body
-								h4.media-heading #{u.title}
-								span #{u.content}
+						div
+							a(href="/p/#{u.id}")
+								h4 #{u.title}
+							p #{u.content}
+						hr
 			.col-md-4
-					span dd
+					span 
 		.row
-			nav
-				ul.pagination
-					- for (var i = 1; i < pageNum+1; ++i) {
-						li: a(href="/page/#{i}") #{i} 
-					- }
+			.col-md-12
+				nav
+					ul.pagination
+						- for (var i = 1; i < pageNum+1; ++i) {
+							li: a(href="/list/#{i}") #{i} 
+						- }

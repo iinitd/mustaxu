@@ -6,12 +6,12 @@ block content
 			.col-md-8
 					each u in article
 						div
-								a
-									a(href="/p/#{u.id}")
-										h4.media-heading #{u.title}
-									p #{u.content}
+							a(href="/p/#{u.id}")
+								h4 #{u.title}
+							p #{u.content}
+						hr
 			.col-md-4
-					span dd
+					span 
 		.row
 			nav
 				ul.pagination

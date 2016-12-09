@@ -2,8 +2,8 @@ extends ../layout
 
 block content
 	.container
-		h1 tag
-			.row
-				ul
+		.row
+			.col-md-12
+				ul.nav.navbar-nav
 					each u in tag
-						li: a(href="/tag/#{u.name}") #{u.name}
+						li(style="margin-right:5px;"): a(href="/tag/#{u.name}") #{u.name}
