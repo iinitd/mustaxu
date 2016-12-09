@@ -4,15 +4,16 @@ block content
 	h1= title
 	.container
 		.row
-			form.form-horizontal(method="post",action="/new")
-				.form-group
-					h4 title
-					input#inputTitle.form-control(type="text", name="article[title]")
-				.form-group
-					h4 content
-					textarea#inputTitle.form-control(type="text", name="article[content]")
-				.form-group
-					h4 tags
-					input#inputTitle.form-control(type="json", name="article[tags]")
-				.form-group
-					button.btn.btn-default(type="submit") submit
+			.col-md-8(style="padding-left:30px;")
+				form.form-horizontal(method="post",action="/new")
+					.form-group
+						h4 标题
+						input#inputTitle.form-control(type="text", name="article[title]")
+					.form-group
+						h4 内容
+						textarea#inputTitle.form-control(type="text", name="article[content]",rows="8")
+					.form-group
+						h4 标签
+						input#inputTitle.form-control(type="json", name="article[tags]")
+					.form-group
+						button.btn.btn-default(type="submit") 发布
