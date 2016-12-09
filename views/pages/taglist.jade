@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+	.container
+		h1 tag
+			.row
+				ul
+					each u in tag
+						li: a(href="/tag/#{u.name}") #{u.name}

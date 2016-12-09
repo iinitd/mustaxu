@@ -14,6 +14,7 @@ mongoose.connect('mongodb://m:m@ds127928.mlab.com:27928/mustaxu');
 
 var Article = models.Article;
 var User = models.User;
+var Tag = models.Tag;
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded());
@@ -39,11 +40,49 @@ router.use(function(req, res, next) {
 
 /* GET home page. */
 
-router.get('/', function(req, res) {
-	res.redirect('/page/1');
+router.get('/', function(req, res, next) {
+
+	Article.fetchPage(1, function(err, article) {
+		if (!err) {
+
+			if (req.session.user) {
+				console.log(req.session.user.username)
+				res.render('list', {
+					title: 'Mustaxu',
+					username: req.session.user.username,
+					article: article,
+					login: true
+
+				})
+			} else {
+				console.log('not login')
+				res.render('index', {
+					title: 'Mustaxu',
+					username: '游客',
+					article: article
+				})
+			}
+
+		}
+	})
+
 });
 
-router.get('/page/:page', function(req, res, next) {
+router.get('/list', function(req, res) {
+	res.redirect('/list/1');
+});
+
+router.get('/tag', function(req, res) {
+	Tag.find({}, function(err, tag) {
+		if (!err) {
+			res.render('taglist', {
+				tag: tag
+			})
+		}
+	})
+})
+
+router.get('/list/:page', function(req, res, next) {
 
 	var page = req.params.page;
 
@@ -59,7 +98,7 @@ router.get('/page/:page', function(req, res, next) {
 
 				if (req.session.user) {
 					console.log(req.session.user.username)
-					res.render('index', {
+					res.render('list', {
 						title: 'Mustaxu',
 						username: req.session.user.username,
 						article: article,
@@ -69,7 +108,7 @@ router.get('/page/:page', function(req, res, next) {
 					})
 				} else {
 					console.log('not login')
-					res.render('index', {
+					res.render('list', {
 						title: 'Mustaxu',
 						username: '游客',
 						article: article,
@@ -80,8 +119,6 @@ router.get('/page/:page', function(req, res, next) {
 			})
 		}
 	})
-
-
 
 });
 
@@ -321,6 +358,19 @@ router.post('/new', function(req, res) {
 	var user = req.session.user;
 	var article = req.body.article;
 	var tags = req.body['article[tags]'].split(/[ |,]/);
+	for (i = 0; i < tags.length; i++) {
+		var tagObj = new Tag({
+			name: tags[i]
+		})
+		Tag.find({
+			name: tags[i]
+		}, function(req, res) {
+			if (res.length == 0) {
+				tagObj.save();
+			}
+		})
+
+	}
 	var articleObj = new Article({
 		title: req.body['article[title]'],
 		author: user.username,

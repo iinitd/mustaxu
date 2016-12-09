@@ -1,8 +1,20 @@
 .container
 	.row
 		.page-header
-			div
-				h1 
-					a(href="/") Mustaxu
-			div
-				span 又一个博客
+			h1 
+				a(href="/") Mustaxu
+				small  又一个博客
+		div
+			.collapse.navbar-collapse
+				ul.nav.navbar-nav
+					li: a(href="/") 首页
+					li: a(href="/list") 列表
+					li: a(href="/tag") 标签
+					li: a 
+					-if(user)
+						li: a(href="/new") 发布
+						li: a(href="/logout") 退出
+					-else
+						li: a(href="/login") 登陆
+		hr
+

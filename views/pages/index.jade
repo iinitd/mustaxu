@@ -3,17 +3,18 @@ extends ../layout
 block content
 	.container
 		.row
-			- if (user)
-				.col-md-1
-					a(href="/new")
-						buttun.btn.btn-default(type="button") 发布
+			.col-md-8
+					each u in article
+						div
+								a
+									a(href="/p/#{u.id}")
+										h4.media-heading #{u.title}
+									p #{u.content}
+			.col-md-4
+					span dd
 		.row
-			each u in article
-				a(href="/p/#{u.id}")
-					h4 #{u.title}
-				p: span #{u.content}
-		.row
-			- for (var i = 1; i < pageNum+1; ++i) {
-				a(href="/page/#{i}") #{i} 
-			- }
-			a 
+			nav
+				ul.pagination
+					- for (var i = 1; i < pageNum+1; ++i) {
+						li: a(href="/page/#{i}") #{i} 
+					- }

@@ -70,7 +70,16 @@ _User.statics = {
 	}
 };
 
+var TagSchema = mongoose.Schema;
+// Define User schema 
+var _Tag = new TagSchema({
+	name: String
+}, {
+	versionKey: false
+});
+
 
 // export them 
 exports.Article = mongoose.model('Article', _Article);
 exports.User = mongoose.model('User', _User);
+exports.Tag = mongoose.model('Tag', _Tag);
