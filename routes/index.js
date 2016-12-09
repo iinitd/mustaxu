@@ -285,16 +285,21 @@ router.get('/p/:id', function(req, res) {
 });
 
 router.get('/edit/:id', function(req, res) {
-
-	var id = req.params.id;
-	Article.findById(id, function(err, article) {
-		if (err) {
-			console.log(err)
-		}
-		res.render('edit', {
-			article: article
+	var user = req.session.user;
+	if (user) {
+		var id = req.params.id;
+		Article.findById(id, function(err, article) {
+			if (err) {
+				console.log(err)
+			}
+			res.render('edit', {
+				article: article
+			})
 		})
-	})
+	} else {
+		res.redirect('/login')
+	}
+
 
 });
 
@@ -382,17 +387,21 @@ router.get('/new', function(req, res) {
 })
 
 router.get('/remove/:id', function(req, res) {
+	var user = req.session.user;
+	if (user) {
+		var id = req.params.id;
 
-	var id = req.params.id;
-
-	Article.remove({
-		_id: id
-	}, function(err, article) {
-		if (err) {
-			console.log(err)
-		}
-		res.redirect('/')
-	})
+		Article.remove({
+			_id: id
+		}, function(err, article) {
+			if (err) {
+				console.log(err)
+			}
+			res.redirect('/')
+		})
+	} else {
+		res.redirect('/login')
+	}
 
 })
 
