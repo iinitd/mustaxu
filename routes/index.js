@@ -10,8 +10,8 @@ var fs = require("fs");
 var _ = require('underscore');
 
 
-
-mongoose.connect('mongodb://localhost/blog2');
+mongoose.connect('mongodb://mcogons:mkd6818615@mongodb.eatj.com/mcogons');
+//mongoose.connect('mongodb://localhost/blog2');
 
 var Article = models.Article;
 var User = models.User;
